@@ -1,4 +1,5 @@
-// app.js
+
+ // app.js
 
 import { getStudentsAPI, addStudentsAPI } from './api.js';
 
@@ -13,8 +14,8 @@ const capitalizeFirstLetter = (name) =>
   name.charAt(0).toLocaleUpperCase() + name.slice(1);
 
 /**
- * Dynamically renders table rows or displays an empty state message
- * @param {Array} dataArray 
+ * Dynamically renders table rows or displays an empty state message.
+ * @param {Array} dataArray - The student records to render.
  */
 const renderTable = (dataArray) => {
   studentTableBody.innerHTML = '';
@@ -22,7 +23,9 @@ const renderTable = (dataArray) => {
   if (!dataArray || dataArray.length === 0) {
     studentTableBody.innerHTML = `
       <tr>
-        <td colspan="4" style="text-align: center;">No student records found.</td>
+        <td colspan="4" style="text-align: center;">
+          No student records found.
+        </td>
       </tr>
     `;
     return;
@@ -30,11 +33,18 @@ const renderTable = (dataArray) => {
 
   dataArray.forEach((student, index) => {
     const row = document.createElement('tr');
-    [index + 1, student.firstName, student.lastName, student.email].forEach((value) => {
+
+    [
+      index + 1,
+      student.firstName,
+      student.lastName,
+      student.email,
+    ].forEach((value) => {
       const cell = document.createElement('td');
       cell.textContent = value;
       row.appendChild(cell);
     });
+
     studentTableBody.appendChild(row);
   });
 };
@@ -43,8 +53,14 @@ const renderTable = (dataArray) => {
 studentForm.addEventListener('submit', (event) => {
   event.preventDefault();
 
-  const firstName = capitalizeFirstLetter(document.querySelector('#firstName').value.trim());
-  const lastName = capitalizeFirstLetter(document.querySelector('#lastName').value.trim());
+  const firstName = capitalizeFirstLetter(
+    document.querySelector('#firstName').value.trim()
+  );
+
+  const lastName = capitalizeFirstLetter(
+    document.querySelector('#lastName').value.trim()
+  );
+
   const email = document.querySelector('#email').value.trim();
 
   // Validate that all fields are provided
@@ -67,7 +83,7 @@ studentForm.addEventListener('submit', (event) => {
 });
 
 /**
- * Initializes the application
+ * Initializes the application.
  */
 const initApp = () => {
   localStudent = getStudentsAPI();
