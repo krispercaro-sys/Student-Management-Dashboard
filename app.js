@@ -9,6 +9,9 @@ let localStudent = [];
 const studentForm = document.querySelector('#studentForm');
 const studentTableBody = document.querySelector('#studentTableBody');
 
+const capitalizeFirstLetter = (name) =>
+  name.charAt(0).toLocaleUpperCase() + name.slice(1);
+
 /**
  * Dynamically renders table rows or displays an empty state message
  * @param {Array} dataArray 
@@ -27,12 +30,11 @@ const renderTable = (dataArray) => {
 
   dataArray.forEach((student, index) => {
     const row = document.createElement('tr');
-    row.innerHTML = `
-      <td>${index + 1}</td>
-      <td>${student.firstName}</td>
-      <td>${student.lastName}</td>
-      <td>${student.email}</td>
-    `;
+    [index + 1, student.firstName, student.lastName, student.email].forEach((value) => {
+      const cell = document.createElement('td');
+      cell.textContent = value;
+      row.appendChild(cell);
+    });
     studentTableBody.appendChild(row);
   });
 };
@@ -41,8 +43,8 @@ const renderTable = (dataArray) => {
 studentForm.addEventListener('submit', (event) => {
   event.preventDefault();
 
-  const firstName = document.querySelector('#firstName').value.trim();
-  const lastName = document.querySelector('#lastName').value.trim();
+  const firstName = capitalizeFirstLetter(document.querySelector('#firstName').value.trim());
+  const lastName = capitalizeFirstLetter(document.querySelector('#lastName').value.trim());
   const email = document.querySelector('#email').value.trim();
 
   // Validate that all fields are provided
